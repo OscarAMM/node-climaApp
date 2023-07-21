@@ -16,7 +16,7 @@ class Busquedas {
             'lengugage': 'es'
         }
     }
-    async ciudad(place = '') {
+    async city(place = '') {
         try {
             
             const instance = axios.create({
@@ -24,8 +24,12 @@ class Busquedas {
                 params: this.paramsMapBox
             });
             const resp = await instance.get();
-            console.log(resp.data);
-            return [];
+            return resp.data.features.map(dataPlace => ({
+                id: dataPlace.id,
+                name: dataPlace.place_name,
+                lng: dataPlace.center[0],
+                lat: dataPlace.center[1]
+            }));
         } catch (error) {
 
         }
